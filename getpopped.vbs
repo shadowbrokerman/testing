@@ -2,14 +2,14 @@ Set objShell = CreateObject("Wscript.Shell")
 
 
 
-WScript.Sleep 15000
+WScript.Sleep 10000
 
 
 
 objShell.run("schtasks /delete /tn OneSHOTDriveUpdateV1 /f"), 0, True
   
 
-WScript.Sleep 10000
+WScript.Sleep 12000
 
 
 objShell.run("schtasks /delete /tn 1Updateworkstation /f"), 0, True
